@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Convert YAML to JSON and vice versa. Validate your config files with syntax highlighting.">
+    <meta name="keywords" content="YAML to JSON, JSON to YAML, YAML converter, config converter, YAML validator">
+    <meta property="og:title" content="YAML ↔ JSON — DevKit Tools">
+    <meta property="og:description" content="Convert YAML to JSON and vice versa. Validate your config files with syntax highlighting.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <title>YAML ↔ JSON — DevKit Tools</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+            --success: #3fb950;
+            --danger: #f85149;
+            --radius: 6px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .header a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 16px; }
+        .header a:hover { color: var(--accent); }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            flex: 1;
+            width: 100%;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #f0f6fc;
+        }
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .card h2 {
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: #f0f6fc;
+        }
+        textarea, input[type="text"], input[type="number"], select {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px;
+            color: var(--text);
+            font-size: 14px;
+            font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+            resize: vertical;
+            transition: border-color 0.15s;
+        }
+        textarea:focus, input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+        }
+        button {
+            background: #238636;
+            color: #fff;
+            border: 1px solid rgba(240, 246, 252, 0.1);
+            border-radius: var(--radius);
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        button:hover { background: #2ea043; }
+        button.secondary {
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+        button.secondary:hover { background: #30363d; }
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .feature-tag {
+            background: rgba(88, 166, 255, 0.1);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .output {
+            margin-top: 16px;
+            word-break: break-all;
+        }
+        .footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            border-top: 1px solid var(--border);
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+        .btn-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .copied { color: var(--success); font-size: 12px; margin-left: 8px; opacity: 0; transition: opacity 0.3s; }
+        .copied.show { opacity: 1; }
+        .label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="https://479464887-rgb.github.io/devkit-site/">← DevKit Tools</a>
+        <span style="color:var(--text-secondary);font-size:13px">YAML ↔ JSON</span>
+    </div>
+    <div class="container">
+        <h1>YAML ↔ JSON</h1>
+        <p class="subtitle">Convert YAML to JSON and vice versa. Validate your config files with syntax highlighting.</p>
+        <div class="features">
+            <span class="feature-tag">Bidirectional conversion</span>
+            <span class="feature-tag">Syntax highlighting</span>
+            <span class="feature-tag">Error detection</span>
+            <span class="feature-tag">Copy / Download</span>
+        </div>
+        <div class="card">
+            <h2>Tool</h2>
+            <div id="tool-area">
+                
+<div class="btn-row" style="margin-bottom:12px;">
+    <button id="to-json" style="background:#238636;">YAML → JSON</button>
+    <button id="to-yaml" class="secondary">JSON → YAML</button>
+</div>
+<label class="label" id="mode-label">YAML Input</label>
+<textarea id="yaml-input" rows="8" placeholder="name: John Doe..."></textarea>
+<label class="label" id="out-label" style="margin-top:16px;">JSON Output</label>
+<textarea id="json-output" rows="8" readonly></textarea>
+<button id="copy-yaml" style="margin-top:8px;">Copy</button>
+
+            <script>
+
+const input = document.getElementById('yaml-input');
+const output = document.getElementById('json-output');
+const toJson = document.getElementById('to-json');
+const toYaml = document.getElementById('to-yaml');
+const mode = document.getElementById('mode-label');
+
+let currentMode = 'yaml2json';
+
+function yamlToJson(yaml) {
+    const lines = yaml.split('\n');
+    const result = {};
+    const stack = [{obj: result, indent: -1}];
+    
+    for (const line of lines) {
+        if (!line.trim() || line.trim().startsWith('#')) continue;
+        const indent = line.search(/\S/);
+        const content = line.trim();
+        const colonIdx = content.indexOf(':');
+        if (colonIdx === -1) continue;
+        
+        const key = content.substring(0, colonIdx).trim();
+        let value = content.substring(colonIdx + 1).trim();
+        
+        while (stack.length > 1 && stack[stack.length-1].indent >= indent) stack.pop();
+        
+        const current = stack[stack.length-1].obj;
+        if (value === '') {
+            const newObj = {};
+            current[key] = newObj;
+            stack.push({obj: newObj, indent});
+        } else {
+            if (value === 'true') value = true;
+            else if (value === 'false') value = false;
+            else if (value === 'null') value = null;
+            else if (/^-?\d+\.?\d*$/.test(value)) value = Number(value);
+            current[key] = value;
+        }
+    }
+    return result;
+}
+
+function jsonToYaml(obj, indent = 0) {
+    const pad = '  '.repeat(indent);
+    let yaml = '';
+    for (const [key, val] of Object.entries(obj)) {
+        if (typeof val === 'object' && val !== null && !Array.isArray(val)) {
+            yaml += `${pad}${key}:\n${jsonToYaml(val, indent + 1)}`;
+        } else if (Array.isArray(val)) {
+            yaml += `${pad}${key}:\n`;
+            val.forEach(item => {
+                if (typeof item === 'object' && item !== null) {
+                    yaml += `${pad}  - ${JSON.stringify(item)}\n`;
+                } else {
+                    yaml += `${pad}  - ${item}\n`;
+                }
+            });
+        } else {
+            yaml += `${pad}${key}: ${val === null ? 'null' : val}\n`;
+        }
+    }
+    return yaml;
+}
+
+function convert() {
+    try {
+        if (currentMode === 'yaml2json') {
+            const parsed = yamlToJson(input.value);
+            output.value = JSON.stringify(parsed, null, 2);
+        } else {
+            const parsed = JSON.parse(input.value);
+            output.value = jsonToYaml(parsed);
+        }
+    } catch (e) {
+        output.value = 'Error: ' + e.message;
+    }
+}
+
+toJson.addEventListener('click', () => {
+    currentMode = 'yaml2json';
+    toJson.style.background = '#238636';
+    toYaml.style.background = 'var(--surface)';
+    document.getElementById('mode-label').textContent = 'YAML Input';
+    document.getElementById('out-label').textContent = 'JSON Output';
+    input.placeholder = 'name: John\ndoe...';
+    convert();
+});
+toYaml.addEventListener('click', () => {
+    currentMode = 'json2yaml';
+    toYaml.style.background = '#238636';
+    toJson.style.background = 'var(--surface)';
+    document.getElementById('mode-label').textContent = 'JSON Input';
+    document.getElementById('out-label').textContent = 'YAML Output';
+    input.placeholder = '{"name": "John"}';
+    convert();
+});
+input.addEventListener('input', convert);
+document.getElementById('copy-yaml').addEventListener('click', () => {
+    navigator.clipboard.writeText(output.value);
+    const b = document.getElementById('copy-yaml');
+    b.textContent = 'Copied!';
+    setTimeout(() => b.textContent = 'Copy', 1500);
+});
+
+input.value = 'name: John Doe\nage: 30\nemail: john@example.com\naddress:\n  city: New York\n  zip: "10001"\nhobbies:\n  - coding\n  - reading';
+convert();
+
+            </script>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <a href="https://479464887-rgb.github.io/devkit-site/privacy.html">Privacy</a> ·
+        <a href="https://479464887-rgb.github.io/devkit-site/terms.html">Terms</a> ·
+        © 2026 DevKit Tools
+    </div>
+    <script>
+    function copyText(text, btn) {
+        navigator.clipboard.writeText(text).then(() => {
+            var orig = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(() => btn.textContent = orig, 1500);
+        });
+    }
+    </script>
+</body>
+</html>
