@@ -9,7 +9,9 @@
     <meta property="og:description" content="Convert YAML to JSON and vice versa. Validate your config files with syntax highlighting.">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary">
-    <title>Yaml To Json — DevKit Tools</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y=".9em" font-size='90'>🛠</text></svg>">
+<title>Yaml To Json — DevKit Tools</title>
     <style>
         :root {
             --bg: #0d1117;
@@ -150,7 +152,7 @@
             margin-bottom: 6px;
             font-weight: 500;
         }
-    </style>
+    *:focus-visible{outline:2px solid #58a6ff;outline-offset:2px}::selection{background:rgba(88,166,255,0.3);color:#fff}</style>
 </head>
 <body>
     <div class="header">
@@ -181,6 +183,7 @@
 <button id="copy-yaml" style="margin-top:8px;">Copy</button>
 
             <script>
+'use strict';
 
 const input = document.getElementById('yaml-input');
 const output = document.getElementById('json-output');
@@ -298,6 +301,7 @@ convert();
         © 2026 DevKit Tools
     </div>
     <script>
+'use strict';
     function copyText(text, btn) {
         navigator.clipboard.writeText(text).then(() => {
             var orig = btn.textContent;
