@@ -10,7 +10,9 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠</text></svg>">
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠</text></svg>">
+<meta name="theme-color" content="#0d1117">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Convert YAML to JSON and vice versa. Validate your config files with syntax highlighting.">
     <meta name="keywords" content="YAML to JSON, JSON to YAML, YAML converter, config converter, YAML validator">
     <meta property="og:title" content="YAML ↔ JSON — DevKit Tools">
@@ -159,6 +161,9 @@
             font-weight: 500;
         }
     </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Yaml To Json","description":"Convert YAML to JSON and vice versa. Validate your config files with syntax highlighting.","url":"https://479464887-rgb.github.io/yaml-to-json/","applicationCategory":"DeveloperApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
 </head>
 <body>
     <div class="header">
@@ -189,7 +194,7 @@
 <button id="copy-yaml" style="margin-top:8px;">Copy</button>
 
             <script>
-
+'use strict';
 const input = document.getElementById('yaml-input');
 const output = document.getElementById('json-output');
 const toJson = document.getElementById('to-json');
@@ -295,8 +300,7 @@ document.getElementById('copy-yaml').addEventListener('click', () => {
 
 input.value = 'name: John Doe\nage: 30\nemail: john@example.com\naddress:\n  city: New York\n  zip: "10001"\nhobbies:\n  - coding\n  - reading';
 convert();
-
-            </script>
+</script>
             </div>
         </div>
     </div>
@@ -306,13 +310,14 @@ convert();
         © 2026 DevKit Tools
     </div>
     <script>
-    function copyText(text, btn) {
+'use strict';
+function copyText(text, btn) {
         navigator.clipboard.writeText(text).then(() => {
             var orig = btn.textContent;
             btn.textContent = 'Copied!';
             setTimeout(() => btn.textContent = orig, 1500);
         });
     }
-    </script>
+</script>
 </body>
 </html>
